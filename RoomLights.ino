@@ -18,25 +18,46 @@ const int DOOR_WIDTH_CM = 75;
 
 long sound_travel_duration;
 bool lightsOn;
+//this is so the ultrasonic sensor only samples every 500 ms
+int loopCount;
 
-
+const int BUTTON_PIN = 5;
+int buttonState = 0;
 
 void setup() {
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
   lightsOn = false;
+  loopCount = 0;
 
   // set the maximum speed, acceleration factor, initial speed
 	lightSwitchStepper.setMaxSpeed(1000.0);
 	lightSwitchStepper.setAcceleration(50.0);
 	lightSwitchStepper.setSpeed(200);
+
+  pinMode(BUTTON_PIN, INPUT);
 }
 
 void loop() {
-  if(getDistanceCM() < DOOR_WIDTH_CM && !(lightsOn)){
-    turnLightsOn();
+  if(loopCount == 10){
+    if(getDistanceCM() < DOOR_WIDTH_CM && !(lightsOn)){
+      turnLightsOn();
+    }
+    loopCount = 0;
+  }else{
+    loopCount++;
   }
-  delay(500);
+  
+
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(BUTTON_PIN);
+
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH
+  // so turn off the lights
+  if (buttonState == HIGH && lightsOn) {
+    turnLightsOff();
+  }
+  delay(50);
 }
 
 int getDistanceCM(){
@@ -69,6 +90,7 @@ void turnLightsOff(){
   gotoPos(OFF_POS);
   gotoPos(NEUTRAL_POS);
   lightsOn = false;
+  delay(5000);
 }
 
 void gotoPos(int targetPos){
