@@ -8,8 +8,8 @@ const int ECHO_PIN = 7;
 #define MotorInterfaceType 4
 
 const int NEUTRAL_POS = 0;
-const int ON_POS = 75;
-const int OFF_POS = -175;
+const int ON_POS = 150;
+const int OFF_POS = -275;
 
 // Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
 AccelStepper lightSwitchStepper(MotorInterfaceType, 8, 10, 9, 11);
