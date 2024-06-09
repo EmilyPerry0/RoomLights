@@ -8,6 +8,8 @@ long duration;
 // Variable to store the distance
 int distance;
 
+const int DOOR_WIDTH_CM = 75;
+
 void setup() {
   // Initialize serial communication
   Serial.begin(9600);
@@ -39,6 +41,7 @@ void loop() {
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
+  Serial.println(distance < DOOR_WIDTH_CM);
 
   // Wait for a short period before the next measurement
   delay(1000); // 1 second

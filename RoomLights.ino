@@ -17,7 +17,6 @@ AccelStepper lightSwitchStepper(MotorInterfaceType, 8, 10, 9, 11);
 const int DOOR_WIDTH_CM = 75;
 
 long sound_travel_duration;
-int distance_cm;
 bool lightsOn;
 
 
@@ -41,6 +40,7 @@ void loop() {
 }
 
 int getDistanceCM(){
+  int distance_cm = 0;
   // Clear the trigPin
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
